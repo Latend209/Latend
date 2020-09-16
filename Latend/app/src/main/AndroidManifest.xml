@@ -8,19 +8,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <!--스플래시 액티비티-->
+
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".UpdateInfoActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".DevFoodActivity" />
+        <activity android:name=".AdSuggestActivity" />
+        <activity android:name=".DefaultActivity" /> <!-- 스플래시 액티비티 -->
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
 
     </application>
 
