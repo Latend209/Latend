@@ -21,6 +21,11 @@ class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         naviView.setNavigationItemSelectedListener(this) // 네비게이션 메뉴 아이템에 클릭 속성 부여
 
+        goto_all_alarm_btn.setOnClickListener {
+            val intent = Intent(this, MakeAlarmActivity::class.java) // 다음 화면으로 이동하기 위한 Intent 객체 생성
+            startActivity(intent) // intent에 저장되어있는 activity로 이동한다.
+        }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

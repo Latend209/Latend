@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5588B3"
+    tools:context=".MakeAlarmActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="261dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/alarm_name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="32dp"
+                        android:background="@drawable/rounded_gray"
+                        android:ems="10"
+                        android:hint="알람 이름"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="하루"
+                            android:textColor="#FFFFFF"
+                            android:textOff="하루"
+                            android:textOn="하루"
+                            android:textSize="18sp" />
+
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_week"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="일주일"
+                            android:textColor="#FFFFFF"
+                            android:textOff="일주일"
+                            android:textOn="일주일"
+                            android:textSize="18sp" />
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_month"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="한 달"
+                            android:textColor="#FFFFFF"
+                            android:textOff="한 달"
+                            android:textOn="한 달"
+                            android:textSize="18sp" />
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="일 년"
+                            android:textColor="#FFFFFF"
+                            android:textOff="일 년"
+                            android:textOn="일 년"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/alarm_btn_calendar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="직접 선택"
+                            android:textColor="#FFFFFF"
+                            android:textOff="직접 선택"
+                            android:textOn="직접 선택"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/alarm_times_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/alarm_of_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="중"
+                                android:textSize="30sp" />
+
+                            <EditText
+                                android:id="@+id/alarm_times_et"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_gray"
+                                android:ems="10"
+                                android:textSize="30sp"
+                                android:padding="5dp"
+                                android:cursorVisible="false"
+                                android:inputType="numberDecimal" />
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="회"
+                                android:textSize="30sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_dawn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="새벽"
+                            android:textColor="#FFFFFF"
+                            android:textOff="새벽"
+                            android:textOn="새벽"
+                            android:textSize="18sp" />
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_morning"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="오전"
+                            android:textColor="#FFFFFF"
+                            android:textOff="오전"
+                            android:textOn="오전"
+                            android:textSize="18sp" />
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_afternoon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="오후"
+                            android:textColor="#FFFFFF"
+                            android:textOff="오후"
+                            android:textOn="오후"
+                            android:textSize="18sp" />
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_night"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="밤"
+                            android:textColor="#FFFFFF"
+                            android:textOff="밤"
+                            android:textOn="밤"
+                            android:textSize="18sp" />
+
+                        <ToggleButton
+                            android:id="@+id/alarm_btn_custom_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_gray"
+                            android:text="직접 선택"
+                            android:textColor="#FFFFFF"
+                            android:textOff="직접 선택"
+                            android:textOn="직접 선택"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/alarm_result_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/rounded_gray"
+                    android:padding="10dp"
+                    android:text="2020년 12월 31일 부터\n2021년 12월 24일까지\n\12시55분부터 17시35분까지\n5555회"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/alarm_detail_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/rounded_blue"
+                    android:text="기타 상세 설정"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/alarm_complete_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/rounded_darkblue"
+                    android:text="완료"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,9 +10,12 @@
         android:supportsRtl="true"
 
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".AlarmDetailActivity"></activity>
+        <activity android:name=".AlamDetailActivity" />
+        <activity android:name=".MakeAlarmActivity" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
         <activity android:name=".UpdateInfoActivity" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".DevFoodActivity" />
