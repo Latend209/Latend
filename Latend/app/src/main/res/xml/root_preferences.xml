@@ -1,0 +1,47 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:title="설정"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:layout_width="match_parent"
+            app:iconSpaceReserved="false"
+            app:key="nickname"
+            app:title="닉네임 변경"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:iconSpaceReserved="false"
+            app:key="profilephoto"
+            app:title="프로필 사진 변경"
+            app:useSimpleSummaryProvider="false" />
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="@string/lock_ok"
+            app:summaryOff="@string/lock_off"
+            app:summaryOn="@string/lock_on"
+            app:title="@string/lock_ok" />
+
+        <EditTextPreference
+            app:dependency="@string/lock_ok"
+            app:key="app_pw"
+            app:title="암호 설정"
+            app:useSimpleSummaryProvider="true"
+            app:summary="@string/lock_summary"
+            app:iconSpaceReserved="false"/>
+
+        <ListPreference
+            app:defaultValue="한국어"
+            app:entries="@array/language"
+            app:entryValues="@array/reply_entries"
+            app:iconSpaceReserved="false"
+            app:key="language"
+            app:title="@string/language"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

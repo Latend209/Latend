@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1090740701295",
+    "firebase_url": "https://latend209.firebaseio.com",
+    "project_id": "latend209",
+    "storage_bucket": "latend209.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090740701295:android:fa57f90db7ede47881659a",
+        "android_client_info": {
+          "package_name": "com.devroach.latend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090740701295-u5pgfjucs27tjcjaa20pgdd04gc77s3d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devroach.latend",
+            "certificate_hash": "caff1b24f22cb8a577aef84fe612bb1c1e1aa952"
+          }
+        },
+        {
+          "client_id": "1090740701295-qhuchotdc7lbmgrav7kag7op4leeroc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0JBupRLQSAS8g0MwgvfPJlQnS7DDDMv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090740701295-qhuchotdc7lbmgrav7kag7op4leeroc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/updateinfo"
+            android:icon="@drawable/ic_baseline_update_24"
+            android:title = "업데이트 정보"/>
+
+        <item android:id="@+id/food"
+            android:icon="@drawable/ic_baseline_fastfood_24"
+            android:title = "불쌍한 개발자"/>
+
+        <item android:id="@+id/ad"
+            android:icon="@drawable/ic_baseline_monetization_on_24"
+            android:title = "광고 제휴 문의"/>
+
+        <item android:id="@+id/setting"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title = "설정"/>
+
+        <item android:id="@+id/help"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:title = "도움말"/>
+
+        <item android:id="@+id/review"
+            android:icon="@drawable/ic_baseline_rate_review_24"
+            android:title = "리뷰 남기러 가기"/>
+
+        <item android:id="@+id/logout"
+            android:icon="@drawable/ic_baseline_arrow_forward_24"
+            android:title = "로그아웃"/>
+
+    </group>
+</menu>
