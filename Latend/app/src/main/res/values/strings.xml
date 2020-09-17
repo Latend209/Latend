@@ -2,6 +2,7 @@
     <string name="app_name">Latend</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -22,4 +23,10 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="lock_summary">앱을 실행할 때 입력할 비밀번호를 설정합니다.</string>
+
+
+    <string name="kakao_app_key">98d442a3aaf522560fa218c4930770f5</string>
+
+    <string name="google_login_text">Login with Google</string>
+
 </resources>
