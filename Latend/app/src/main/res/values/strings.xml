@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Latend_login</string>
-
+    <string name="app_name">Latend</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
@@ -23,5 +22,4 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="lock_summary">앱을 실행할 때 입력할 비밀번호를 설정합니다.</string>
-
 </resources>
