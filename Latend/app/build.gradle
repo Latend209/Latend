@@ -54,6 +54,7 @@ dependencies {
     implementation "com.kakao.sdk:v2-story:2.0.2" // 카카오스토리
     implementation "com.kakao.sdk:v2-link:2.0.2" // 메시지(카카오링크)
     implementation "com.kakao.sdk:v2-navi:2.0.2" // 카카오내비
+    implementation "com.google.android.material:material:1.2.0-alpha03" //range calendar 설정
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
