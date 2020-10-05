@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/default_profile"
+        android:title="기본 이미지로 설정"
+        android:icon="@drawable/ic_baseline_person_24">
+    </item>
+
+    <item
+        android:id="@+id/album_profile"
+        android:title="앨범에서 사진 선택"
+        android:icon="@drawable/ic_baseline_image_24">
+    </item>
+
+    <item
+        android:id="@+id/camera_profile"
+        android:title="카메라로 사진 촬영"
+        android:icon="@drawable/ic_baseline_camera_alt_24">
+    </item>
+</menu>

@@ -1,19 +1,39 @@
 package com.devroach.latend
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_default.*
+import kotlinx.android.synthetic.main.activity_logout_popup.*
+import javax.security.auth.login.LoginException
 
 class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var database : FirebaseDatabase
+    lateinit var databaseReference: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_default)
+
+        database = FirebaseDatabase.getInstance()//데이터베이스 연동
+        databaseReference = database.getReference("User")
 
         menu_icon.setOnClickListener{
             layout_drawer.openDrawer(GravityCompat.START) // START : left, END : right 랑 같은 말
@@ -25,6 +45,18 @@ class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val intent = Intent(this, MakeAlarmActivity::class.java) // 다음 화면으로 이동하기 위한 Intent 객체 생성
             startActivity(intent) // intent에 저장되어있는 activity로 이동한다.
         }
+
+        profile_iv.setOnClickListener {
+            var intent = Intent(this,ProfileChangePopup::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+            }
+            startActivity(intent)
+        }
+
+        if(intent.hasExtra("image")){
+            profile_iv.setImageResource(intent.getIntExtra("image",R.drawable.kakao_default_profile_image))
+            Toast.makeText(this, "프로필 사진이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -35,7 +67,7 @@ class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.id.ad -> gotoAddSuggest()
             R.id.setting -> gotoSetting()
             R.id.help -> gotoHelp()
-            R.id.logout -> Toast.makeText(applicationContext, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
+            R.id.logout -> goLogout()
         }
         layout_drawer.closeDrawers() // 네비게이션 뷰 닫기
         return false
@@ -76,6 +108,33 @@ class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         startActivity(intent) // intent에 저장되어있는 activity로 이동한다.
     }
 
+    private fun goLogout(){
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.activity_logout_popup, null)
+        val tv_logout_inflater: TextView = view.findViewById(R.id.tv_logout)
+
+        var alertDialog = AlertDialog.Builder(this)
+            .setTitle("로그아웃")
+            .setPositiveButton("확인"){dialog, which ->
+                logOutComplete()
+            }
+            .setNeutralButton("취소", null)
+            .create()
+
+        alertDialog.setView(view)
+        alertDialog.show()
+    }
+
+    private fun logOutComplete(){
+        Toast.makeText(applicationContext, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
+        val logout_restart = Intent(this, LogInActivity::class.java)
+        logout_restart.putExtra("logout", "logout done")
+        startActivity(logout_restart)
+
+        finish()
+    }
+
+
 
     override fun onBackPressed() {
         if(layout_drawer.isDrawerOpen(GravityCompat.START)){
@@ -86,3 +145,4 @@ class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 }
+

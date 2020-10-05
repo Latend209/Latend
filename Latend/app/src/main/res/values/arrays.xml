@@ -15,4 +15,16 @@
         <item>English</item>
     </string-array>
 
+    <string-array name="profile_picture">
+        <item>기본 이미지</item>
+        <item>앨범에서 사진 선택</item>
+        <item>카메라로 사진 촬영</item>
+    </string-array>
+
+    <string-array name="reply_profile">
+        <item>default</item>
+        <item>album</item>
+        <item>camera</item>
+    </string-array>
+
 </resources>
