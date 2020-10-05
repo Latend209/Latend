@@ -5,6 +5,11 @@
     <!--인터넷 권한-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--카메라와 외부저장소 접근 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -26,6 +31,7 @@
         <activity android:name=".AdSuggestActivity" />
         <activity android:name=".DefaultActivity" />
         <activity android:name=".LogInActivity"/>
+        <activity android:name=".ProfileChangePopup" android:theme="@android:style/Theme.Dialog"/>
         <!-- 스플래시 액티비티 -->
         <activity
             android:name=".SplashActivity"
@@ -33,10 +39,20 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--파일 path 관련 provider-->
+        <provider
+            android:authorities="com.devroach.latend.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"/>
+        </provider>
     </application>
 
 </manifest>

@@ -12,11 +12,25 @@
             app:title="닉네임 변경"
             app:useSimpleSummaryProvider="true" />
 
-        <EditTextPreference
+<!--        <DropDownPreference-->
+<!--            app:iconSpaceReserved="false"-->
+<!--            app:key="profilephoto"-->
+<!--            app:title="프로필 사진 변경"-->
+<!--            app:entries="@array/profile_picture"-->
+<!--            app:entryValues="@array/reply_entries"-->
+<!--            app:useSimpleSummaryProvider="false" />-->
+
+        <PreferenceScreen
             app:iconSpaceReserved="false"
             app:key="profilephoto"
-            app:title="프로필 사진 변경"
-            app:useSimpleSummaryProvider="false" />
+            app:title="프로필 사진 변경">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="com.devroach.latend"
+                android:targetClass="com.devroach.latend.ProfileChangePopup"/>
+
+        </PreferenceScreen>
 
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
