@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -57,6 +59,15 @@ class DefaultActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             profile_iv.setImageResource(intent.getIntExtra("image",R.drawable.kakao_default_profile_image))
             Toast.makeText(this, "프로필 사진이 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
+
+        val memoList = arrayListOf(
+            MainListComponent("로그인 되셨나요?"),
+            MainListComponent("로그인 되셨군요!")
+        )
+
+        main_rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        main_rv.setHasFixedSize(true)
+        main_rv.adapter = MainListAdapter(memoList)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

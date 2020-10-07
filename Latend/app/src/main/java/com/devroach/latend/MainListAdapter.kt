@@ -25,7 +25,7 @@ class MainListAdapter(val profileList: ArrayList<MainListComponent>) : RecyclerV
 
     override fun onBindViewHolder(holder: MainListAdapter.CustomViewHolder, position: Int) {
         //실제 연결
-//        holder.gender.setImageResource(profileList.get(position).gender)
+        holder.title.text = profileList.get(position).title
 //        holder.name.text = profileList.get(position).name
 //        holder.age.text = profileList.get(position).age.toString()
 //        holder.job.text = profileList.get(position).job
@@ -36,7 +36,7 @@ class MainListAdapter(val profileList: ArrayList<MainListComponent>) : RecyclerV
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-//        val gender = itemView.findViewById<ImageView>(R.id.iv_profile)
+        val title = itemView.findViewById<TextView>(R.id.item_title_tv)
 //        val name = itemView.findViewById<TextView>(R.id.tv_name)
 //        val job = itemView.findViewById<TextView>(R.id.tv_job)
 //        val age = itemView.findViewById<TextView>(R.id.tv_age)
