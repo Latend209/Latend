@@ -10,6 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LogInActivity : AppCompatActivity() {
 
     //firebase Auth
-    lateinit var firebaseAuth: FirebaseAuth
+    //lateinit var firebaseAuth: FirebaseAuth
     //google client
     lateinit var googleSignInClient: GoogleSignInClient
 
@@ -31,20 +33,22 @@ class LogInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
 
-
-
-        google_login_btn.setOnClickListener {signIn()}
-
         //Google 로그인 옵션 구성. requestIdToken 및 Email 요청
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.server_client_id))
+            .requestServerAuthCode(getString(R.string.server_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+
+        google_login_btn.setOnClickListener {
+            signIn()
+        }
+
         //firebase auth 객체
-        firebaseAuth = FirebaseAuth.getInstance()
+        //firebaseAuth = FirebaseAuth.getInstance()
 
         if(intent.hasExtra("logout")){
             signOut()
@@ -57,9 +61,19 @@ class LogInActivity : AppCompatActivity() {
         super.onStart()
         var account = GoogleSignIn.getLastSignedInAccount(this)
         if(account!==null){ // 이미 로그인 되어있을시 바로 메인 액티비티로 이동
-            toMainActivity(firebaseAuth.currentUser)
+            updateUI(account)
         }
     } //onStart End
+
+    fun updateUI(account : GoogleSignInAccount? ) {
+        if (account != null) {
+            var userName  = account.displayName
+            var userProfile = account.photoUrl
+            var userEmail = account.email
+            var userId = account.id
+        }
+        toMainActivity(account)
+    }
 
     // onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -71,47 +85,45 @@ class LogInActivity : AppCompatActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account:GoogleSignInAccount? = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account!!)
-
+                //firebaseAuthWithGoogle(account!!)
+                updateUI(account)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("LogInActivity", "Google sign in failed", e)
+                updateUI(null)
             }
         }
     } // onActivityResult End
 
     // firebaseAuthWithGoogle
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Log.d("LogInActivity", "firebaseAuthWithGoogle:" + acct.id!!)
+//    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+//        Log.d("LogInActivity", "firebaseAuthWithGoogle:" + acct.id!!)
+//
+//        //Google SignInAccount 객체에서 ID 토큰을 가져와서 Firebase Auth로 교환하고 Firebase에 인증
+//        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+//        firebaseAuth.signInWithCredential(credential)
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) {
+//                    Log.w("LogInActivity", "firebaseAuthWithGoogle 성공", task.exception)
+//                    toMainActivity(firebaseAuth?.currentUser)
+//                } else {
+//                    Log.w("LogInActivity", "firebaseAuthWithGoogle 실패", task.exception)
+//                    Snackbar.make(login_layout, "로그인에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
+//                    updateUI(null)
+//                }
+//            }
+//    }// firebaseAuthWithGoogle END
 
-        //Google SignInAccount 객체에서 ID 토큰을 가져와서 Firebase Auth로 교환하고 Firebase에 인증
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.w("LogInActivity", "firebaseAuthWithGoogle 성공", task.exception)
-                    toMainActivity(firebaseAuth?.currentUser)
-                } else {
-                    Log.w("LogInActivity", "firebaseAuthWithGoogle 실패", task.exception)
-                    Snackbar.make(login_layout, "로그인에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-    }// firebaseAuthWithGoogle END
 
-    private fun updateUI(user: FirebaseUser?) {
-        if (user != null) {
-            val intent = Intent(this, DefaultActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
 
 
     // toMainActivity
-    fun toMainActivity(user: FirebaseUser?) {
-        if(user !=null) { // DefaultActivity 로 이동
-            updateUI(user)
+    fun toMainActivity(account: GoogleSignInAccount?) {
+        if(account !=null) { // DefaultActivity 로 이동
+            //updateUI(account)
+            var intent = Intent(this, DefaultActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     } // toMainActivity End
 
@@ -128,20 +140,19 @@ class LogInActivity : AppCompatActivity() {
 
     fun signOut() { // 로그아웃
         // Firebase sign out
-        firebaseAuth.signOut()
+        //firebaseAuth.signOut()
 
         // Google sign out
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            //updateUI(null)
-        }
+        googleSignInClient.signOut().addOnCompleteListener(this) {  }
     }
 
     fun revokeAccess() { //회원탈퇴
-        FirebaseAuth.getInstance().signOut()
+        //FirebaseAuth.getInstance().signOut()
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
 
         }
     }
+
 
     //액티비티 종료될 때 에니메이션 없애기
 //    override fun onPause() {

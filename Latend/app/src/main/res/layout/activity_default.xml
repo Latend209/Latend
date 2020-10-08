@@ -85,19 +85,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <TextView
-            android:id="@+id/ad_tv"
+<!--        <TextView-->
+<!--            android:id="@+id/ad_tv"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:background="@drawable/rounded_corner"-->
+<!--            android:gravity="center"-->
+<!--            android:text="광고 표시 구역"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="30sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_corner"
-            android:gravity="center"
-            android:text="광고 표시 구역"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

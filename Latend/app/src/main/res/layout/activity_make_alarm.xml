@@ -178,11 +178,12 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:background="@drawable/rounded_gray"
-                                android:ems="10"
-                                android:textSize="30sp"
-                                android:padding="5dp"
                                 android:cursorVisible="false"
-                                android:inputType="numberDecimal" />
+                                android:ems="10"
+                                android:inputType="number"
+                                android:padding="5dp"
+                                android:text="1"
+                                android:textSize="30sp" />
 
                             <TextView
                                 android:id="@+id/textView4"

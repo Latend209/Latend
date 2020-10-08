@@ -28,5 +28,6 @@
     <string name="kakao_app_key">98d442a3aaf522560fa218c4930770f5</string>
 
     <string name="google_login_text">Login with Google</string>
+    <string name="server_client_id">1090740701295-540vu4hq5tlo1jkvcejjrdu4n20efjqm.apps.googleusercontent.com</string>
 
 </resources>
