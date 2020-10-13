@@ -1,9 +1,9 @@
 package com.devroach.latend
 
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.PendingIntent
-import android.app.TimePickerDialog
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,15 +13,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateUtils
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import android.widget.ToggleButton
+import android.view.ViewGroup
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import kotlinx.android.synthetic.main.activity_make_alarm.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.stream.IntStream.range
 
 
 class MakeAlarmActivity : AppCompatActivity() {
@@ -46,6 +46,12 @@ class MakeAlarmActivity : AppCompatActivity() {
         val afternoon_btn = findViewById(R.id.alarm_btn_afternoon) as ToggleButton
         val night_btn = findViewById(R.id.alarm_btn_night) as ToggleButton
         val clock_btn = findViewById(R.id.alarm_btn_custom_time) as ToggleButton
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.number_picker_dialog, null)
+        var dialogText = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogStart = dialogView.findViewById<NumberPicker>(R.id.start_number_picker)
+        val dialogEnd = dialogView.findViewById<NumberPicker>(R.id.end_number_picker)
 
         val term_arr:Array<ToggleButton> = arrayOf( // 기간 버튼 array
             day_btn,
@@ -150,26 +156,48 @@ class MakeAlarmActivity : AppCompatActivity() {
 
         alarm_times.addTextChangedListener(textWatcher);
 
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////// 시간 관련
-        time_arr.forEach {
-            it.setOnCheckedChangeListener { v, isChecked ->
-                if (isChecked){
-                    it.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_blue))
-                    if(it == clock_btn){
-                        time_arr.filter { it != clock_btn && it.isChecked }.forEach {
-                            it.isChecked = false
-                            it.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_gray))
+
+        val time_interval:Array<Int> = arrayOf(
+            0, 5, 6, 11, 12, 17, 18, 23
+        )
+
+        var alarmTime = BooleanArray(24) { false };
+
+        time_arr.forEachIndexed { index, toggleButton ->
+            toggleButton.setOnCheckedChangeListener { v, isChecked ->
+                if (isChecked){ // 버튼 눌렀을 때
+                    v.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_blue));
+                    if(index < 4)
+                    { for(i in range(time_interval[index * 2], time_interval[index * 2 + 1] + 1))
+                        alarmTime[i] = true
+                    }
+                }
+                else{
+                    toggleButton.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_gray));
+                    if(index == 4){
+                        if(dialogStart.value > dialogEnd.value)
+                            dialogEnd.value +=24
+                        for(i in range(dialogStart.value, dialogEnd.value + 1)){
+                            if(i>23)
+                            {
+                                alarmTime[i-24] = false
+                            }
+                            else alarmTime[i] = false
                         }
+
+                        alarm_btn_custom_time.setText("직접 선택")
                     }
-                    else if(clock_btn.isChecked){
-                        clock_btn.isChecked = false
-                        clock_btn.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_gray))
+                    else {
+                        for(i in range(time_interval[index * 2], time_interval[index * 2 + 1] + 1))
+                        alarmTime[i] = false
                     }
                 }
-                else {
-                    it.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_gray))
-                }
+
+//                alarmTime.forEachIndexed { index, b ->
+//                    Log.e("버튼 반영 잘 되는지 ",index.toString()+b.toString())
+//                }
+
             }
         }
 
@@ -177,31 +205,86 @@ class MakeAlarmActivity : AppCompatActivity() {
         val mPickTimeBtn = findViewById<Button>(R.id.alarm_btn_custom_time)
 
         mPickTimeBtn.setOnClickListener {
-            val cal = Calendar.getInstance()
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                mPickTimeBtn.setText(SimpleDateFormat("HH:mm").format(cal.time))
-            }
+            if(alarm_btn_custom_time.isChecked){
 
-            val tz = TimeZone.getTimeZone("Asia/Seoul")
-            val gc = GregorianCalendar(tz)
-            var hour= gc.get(GregorianCalendar.HOUR)
-            var min = gc.get(GregorianCalendar.MINUTE)
+//            val cur_hour = SimpleDateFormat(
+//                "a hh",
+//                Locale.getDefault()
+//            ).format(
+//                System.currentTimeMillis()
+//            )
+//
+//            var hour_arr = cur_hour.split(" ");
+//            var defaultHour = hour_arr[1].toInt() // 현재 몇 시인지가 담기게 된다.
+//            if(hour_arr[0] == "오후")
+//                defaultHour+=12
+//            if(defaultHour == 24)
+//                defaultHour = 12
+//            else if(defaultHour == 12)
+//                defaultHour = 0
 
-            val dialog = TimePickerDialog(
-                this,
-                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                timeSetListener,
-                hour,
-                min,
-                true
+
+            dialogStart.minValue = 0
+            dialogStart.maxValue = 23
+            dialogEnd.minValue = 1
+            dialogEnd.maxValue = 24
+            dialogStart.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+            dialogEnd.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+
+
+            var check_correctTime = true
+
+//            dialogEnd.setOnValueChangedListener { numberPicker, i1, i2 ->
+//                /* i2가 변경될 때마다 실행할 when 조건문 */
+//                when {
+//                    i2 == dialogStart.value ->  {
+//                        dialogText.text = "끝나는 시간이 시작시간은 같을 수 없습니다. 시간을 재설정해주세요."
+//                        check_correctTime = false
+//                    }
+//                    i1 == dialogEnd.value -> {
+//                        dialogText.text = "끝나는 시간이 시작시간은 같을 수 없습니다. 시간을 재설정해주세요."
+//                        check_correctTime = false
+//                    }
+//                    else -> {
+//                        dialogText.text = "알람 시작 시간과 끝나는 시간을 입력하세요"
+//                        check_correctTime = true
+//                    }
+//                }
+//            }
+
+            // view 는 하나의 부모 뷰에만 추가될 수 있는데, 여러번 다이얼로그를 띄우는 순간 중복으로 view 가 참조되어 에러를 일으킨다. 따라서 뷰의 참조 여부를 확인한 후 setView 를 사용하면 된다.
+            if (dialogView.getParent() != null) (dialogView.getParent() as ViewGroup).removeView(
+                dialogView
             )
-            dialog.setTitle("알람의 최대 시간")
-            dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.show()
+
+            builder.setView(dialogView)
+                .setPositiveButton("확인") { dialogInterface, i ->
+                    if(check_correctTime){
+                        if(dialogStart.value > dialogEnd.value)
+                            dialogEnd.value +=24
+                        for(i in range(dialogStart.value, dialogEnd.value + 1)){
+                            if(i>23)
+                            {
+                                alarmTime[i-24] = true
+                            }
+                            else alarmTime[i] = true
+                        }
+                        alarm_btn_custom_time.setText("" + dialogStart.value + "시 ~ " + dialogEnd.value + "시")
+                    }
+                    else{
+                        alarm_btn_custom_time.isChecked = false
+                        alarm_btn_custom_time.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_gray));
+                    }
+                }
+                .setNegativeButton("취소") { dialogInterface, i ->
+                    /* 취소일 때 아무 액션이 없으므로 빈칸 */
+                    alarm_btn_custom_time.isChecked = false
+                    alarm_btn_custom_time.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_gray));
+
+                }
+                .show()
+            }
         }
-        //////////////////////////////////////////////////////////////////////////////////////////////////////// 시간 관련
 
 
         // 알람 디테일 페이지로 이동
@@ -257,7 +340,25 @@ class MakeAlarmActivity : AppCompatActivity() {
             while (set.size < howManyAlarm!!) {
                 val randomNum: Number = Math.random()
                 val mill = (targetMillis - difMillis * randomNum.toFloat()).toLong()
-                set.add(mill)
+                val check_time = SimpleDateFormat(
+                    "a hh",
+                    Locale.getDefault()
+                ).format(
+                    mill
+                )
+
+                var arr = check_time.split(" ");
+                var hourCheck = arr[1].toInt()
+                if(arr[0] == "오후")
+                    hourCheck+=12
+                if(hourCheck == 24)
+                    hourCheck = 12
+                else if(hourCheck == 12)
+                    hourCheck = 0
+
+                // 원하는 시간대의 알람만 추가한다.
+                if(alarmTime[hourCheck])
+                    set.add(mill)
             }
 
             val test = SimpleDateFormat(
@@ -267,11 +368,10 @@ class MakeAlarmActivity : AppCompatActivity() {
                 targetMillis
             )
 
-            Log.e("원래 목표",test);
+            Log.e("최대 기간", test);
 
             val list: List<Long> = ArrayList(set)
             Collections.sort(list)
-            // targetList 안에 알람이 울릴 정보가 millis 로 들어가 있다.
             // targetList 안에 알람이 울릴 정보가 millis 로 들어가 있다.
             for (i in 0 until howManyAlarm!!) {
                 val date_text = SimpleDateFormat(
@@ -287,7 +387,10 @@ class MakeAlarmActivity : AppCompatActivity() {
             }
 
             val date_text =
-                SimpleDateFormat("최대 yyyy년 $monthString 월 dd일 EE요일 a hh시 mm분 ss초 안에 $howManyAlarm 번의 랜덤 알람이 울립니다. ", Locale.getDefault()).format(
+                SimpleDateFormat(
+                    "최대 yyyy년 $monthString 월 dd일 EE요일 a hh시 mm분 ss초 안에 $howManyAlarm 번의 랜덤 알람이 울립니다. ",
+                    Locale.getDefault()
+                ).format(
                     targetMillis
                 )
 
@@ -318,7 +421,7 @@ class MakeAlarmActivity : AppCompatActivity() {
         // 여기서는 BroadcastReceiver 를 시작하는 Intent 이다.
         alarmIntent.putExtra("alarm_title", alarm_name_et.text.toString()) // id_et의 값을 alarm_title 이라는 이름으로 넘긴다.
         alarmIntent.putExtra("alarm_times", howManyAlarm) // id_et의 값을 alarm_title 이라는 이름으로 넘긴다.
-        alarmIntent.putExtra("alarm_index", index+1) // id_et의 값을 alarm_title 이라는 이름으로 넘긴다.
+        alarmIntent.putExtra("alarm_index", index + 1) // id_et의 값을 alarm_title 이라는 이름으로 넘긴다.
         val pendingIntent = PendingIntent.getBroadcast(this, index, alarmIntent, 0)
         // AlarmManager 가 이벤트를 보내기에 App 이 실행 중이 아니더라도 알림을 받아 어떤 작업을 처리하도록 구현할 수 있다.
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager

@@ -13,7 +13,7 @@ import android.os.Bundle
 import android.widget.Button
 
 class AlarmTestActivity : AppCompatActivity() {
-    // 말그대로 현재 알람 기능이 완료되지 않아서 임시로 푸쉬알림 기능을 해보려고 만든 액티비티
+    // 말그대로 현재 알람 기능이 완료되지 않아서 임시로 푸쉬알림 기능을 해보려고 만든 액티비티 -> 삭제해도 상관 없습니다~!~!
     lateinit var notificationManager:NotificationManager
     lateinit var notificationChannel: NotificationChannel
     lateinit var builder: Notification.Builder

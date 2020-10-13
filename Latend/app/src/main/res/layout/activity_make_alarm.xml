@@ -183,6 +183,7 @@
                                 android:inputType="number"
                                 android:padding="5dp"
                                 android:text="1"
+                                android:textCursorDrawable="@null"
                                 android:textSize="30sp" />
 
                             <TextView

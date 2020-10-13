@@ -80,6 +80,9 @@ public class AlarmReceiver extends BroadcastReceiver {
                     PowerManager.ON_AFTER_RELEASE, "My:Tag");
             wakeLock.acquire(5000);
 
+
+            // 이 아래 부분부터는 공부 또 해야할 듯!
+
             // 노티피케이션 동작시킴
             notificationManager.notify(1234, builder.build());
 
